@@ -1,0 +1,168 @@
+<h2 class="h3">Register</h2>
+<h3 class="lead">Welcome Back! Please enter your details</h3>
+<form [formGroup]="registerForm" (ngSubmit)="Register(registerForm)">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="input-group mb-3">
+                <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+                <input type="text" class="form-control" formControlName="userName" placeholder="UserName " [ngClass]="{
+    'is-invalid': registerForm.get('userName')?.invalid && registerForm.get('userName')?.touched,
+    'is-valid': registerForm.get('userName')?.valid && registerForm.get('userName')?.touched
+  }">
+            </div>
+
+            <div>
+                <p *ngIf="registerForm.get('userName')?.errors?.['required']&& registerForm.get('userName')?.touched"
+                    class="bg-danger-subtle p-2 rounded-3">
+                    userName is required
+                </p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="input-group mb-3">
+                <span class="input-group-text"><i class="fa-solid fa-at"></i></span>
+                <input type="email" class="form-control" formControlName="email" placeholder="Enter your E-mail"
+                    [ngClass]="{
+    'is-invalid': registerForm.get('email')?.invalid && registerForm.get('email')?.touched,
+    'is-valid': registerForm.get('email')?.valid && registerForm.get('email')?.touched
+  }">
+            </div>
+
+            <div>
+                <p *ngIf="(registerForm.get('email')?.errors?.['required'] ||registerForm.get('email')?.errors?.['email']) && registerForm.get('email')?.touched"
+                    class="bg-danger-subtle p-2 rounded-3">
+                    E-mail is required or incorrect
+                </p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="input-group mb-3">
+                <span class="input-group-text"><i class="fa-solid fa-earth-americas"></i></span>
+                <input type="text" class="form-control" formControlName="country" placeholder="country" [ngClass]="{
+    'is-invalid': registerForm.get('country')?.invalid && registerForm.get('country')?.touched,
+    'is-valid': registerForm.get('country')?.valid && registerForm.get('country')?.touched
+  }">
+            </div>
+
+            <div>
+                <p *ngIf="registerForm.get('country')?.errors?.['required']&& registerForm.get('country')?.touched"
+                    class="bg-danger-subtle p-2 rounded-3">
+                    country is required
+                </p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="input-group mb-3">
+                <span class="input-group-text"><i class="fa-solid fa-mobile-screen"></i></span>
+                <input type="tel" class="form-control" formControlName="phoneNumber" placeholder="phoneNumber"
+                    [ngClass]="{
+    'is-invalid': registerForm.get('phoneNumber')?.invalid && registerForm.get('phoneNumber')?.touched,
+    'is-valid': registerForm.get('phoneNumber')?.valid && registerForm.get('phoneNumber')?.touched
+  }">
+            </div>
+
+            <div>
+                <p *ngIf="registerForm.get('phoneNumber')?.errors?.['required'] && registerForm.get('phoneNumber')?.touched"
+                    class="bg-danger-subtle p-2 rounded-3">
+                    Phone is required or incorrect
+                </p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="input-group mb-3">
+                <span class="input-group-text"><i class="fa-solid fa-key"></i></span>
+                <input [type]="isHide?'password':'text'" class="form-control" formControlName="password"
+                    placeholder="Password" [ngClass]="{
+    'is-invalid': registerForm.get('password')?.invalid && registerForm.get('password')?.touched,
+    'is-valid': registerForm.get('password')?.valid && registerForm.get('password')?.touched
+  }">
+
+                <a class="input-group-text" (click)="isHide=!isHide ">
+                    <span>
+                        <i class="fa-solid " [class]="isHide? 'fa-eye-slash' :'fa-eye'"></i>
+                    </span>
+                </a>
+
+
+
+            </div>
+
+
+            <div>
+                <p *ngIf=" registerForm.get('password')?.errors?.['required'] && registerForm.get('password')?.touched"
+                    class="bg-danger-subtle p-2 rounded-3">
+                    Password is required
+                </p>
+
+                <p *ngIf="registerForm.get('password')?.errors?.['minlength'] && registerForm.get('password')?.touched"
+                    class="bg-danger-subtle p-2 rounded-3">
+                    Password must be at least 3 characters
+                </p>
+
+                <p *ngIf="registerForm.get('password')?.errors?.['maxlength'] && registerForm.get('password')?.touched"
+                    class="bg-danger-subtle p-2 rounded-3">
+                    Password must be no more than 20 characters
+                </p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="input-group mb-3">
+                <span class="input-group-text"><i class="fa-solid fa-key"></i></span>
+                <input [type]="isHideConfirm?'password':'text'" class="form-control" formControlName="confirmPassword"
+                    placeholder="confirmPassword" [ngClass]="{
+    'is-invalid': registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched,
+    'is-valid': registerForm.get('confirmPassword')?.valid && registerForm.get('confirmPassword')?.touched
+  }">
+
+                <a class="input-group-text" (click)="isHideConfirm=!isHideConfirm ">
+                    <span>
+                        <i class="fa-solid " [class]="isHideConfirm? 'fa-eye-slash' :'fa-eye'"></i>
+                    </span>
+                </a>
+
+
+
+            </div>
+
+
+            <div>
+                <p *ngIf=" registerForm.get('confirmPassword')?.errors?.['required'] && registerForm.get('confirmPassword')?.touched"
+                    class="bg-danger-subtle p-2 rounded-3">
+                    confirmPassword is required
+                </p>
+
+                <p *ngIf="registerForm.get('confirmPassword')?.errors?.['minlength'] && registerForm.get('confirmPassword')?.touched"
+                    class="bg-danger-subtle p-2 rounded-3">
+                    confirmPassword must be at least 3 characters
+                </p>
+
+                <p *ngIf="registerForm.get('confirmPassword')?.errors?.['maxlength'] && registerForm.get('confirmPassword')?.touched"
+                    class="bg-danger-subtle p-2 rounded-3">
+                    confirmPassword must be no more than 20 characters
+                </p>
+            </div>
+        </div>
+        <div class="col-md-12 my-2">
+            <ngx-dropzone (change)="onSelect($event)" [multiple]="false">
+                <ngx-dropzone-label>Drop your image here !</ngx-dropzone-label>
+                <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f) ">
+                    <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                </ngx-dropzone-preview>
+            </ngx-dropzone>
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <div class="d-flex align-items-center justify-content-between  my-4">
+        <a class="text-decoration-none text-dark" routerLink="/auth/verify">verify account?</a>
+        <a routerLink="/auth/login" class="Forgot">Login Now?</a>
+    </div>
+
+
+    <button class="btn-main w-100" type="submit">Register</button>
+</form>

@@ -1,0 +1,33 @@
+<h2 class="h3"> Verify Account
+</h2>
+<h3 class="lead">Please Enter Your Otp or Check Your Inbox</h3>
+<form [formGroup]="verifyAccount" (ngSubmit)="login()">
+    <div class="input-group mb-3">
+        <span class="input-group-text"><i class="fa-solid fa-mobile-screen"></i></span>
+        <input type="email" class="form-control" formControlName="email" placeholder="Enter your E-mail" [ngClass]="{
+    'is-invalid': verifyAccount.get('email')?.invalid && verifyAccount.get('email')?.touched,
+    'is-valid': verifyAccount.get('email')?.valid && verifyAccount.get('email')?.touched
+  }">
+    </div>
+    <div>
+        <p *ngIf="(verifyAccount.get('email')?.errors?.['required'] ||verifyAccount.get('email')?.errors?.['email']) && verifyAccount.get('email')?.touched"
+            class="bg-danger-subtle p-2 rounded-3">
+            E-mail is required or incorrect
+        </p>
+    </div>
+
+    <div class="input-group mb-3">
+        <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+        <input type='text' class="form-control" formControlName="code" placeholder="OTP" [ngClass]="{
+    'is-invalid': verifyAccount.get('code')?.invalid && verifyAccount.get('code')?.touched,
+    'is-valid': verifyAccount.get('code')?.valid && verifyAccount.get('code')?.touched
+  }">
+    </div>
+    <div>
+        <p *ngIf=" verifyAccount.get('code')?.errors?.['required'] && verifyAccount.get('code')?.touched"
+            class="bg-danger-subtle p-2 rounded-3">
+            Otp is required
+        </p>
+    </div>
+    <button class="btn-main w-100" type="submit">send</button>
+</form>

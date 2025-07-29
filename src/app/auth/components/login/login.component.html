@@ -1,0 +1,63 @@
+<h2 class="h3">Log In</h2>
+<h3 class="lead">Welcome Back! Please enter your details</h3>
+<form [formGroup]="loginForm" (ngSubmit)="login()">
+    <div class="input-group mb-3">
+        <span class="input-group-text"><i class="fa-solid fa-mobile-screen"></i></span>
+        <input type="email" class="form-control" formControlName="email" placeholder="Enter your E-mail" [ngClass]="{
+    'is-invalid': loginForm.get('email')?.invalid && loginForm.get('email')?.touched,
+    'is-valid': loginForm.get('email')?.valid && loginForm.get('email')?.touched
+  }">
+    </div>
+
+    <div>
+        <p *ngIf="(loginForm.get('email')?.errors?.['required'] ||loginForm.get('email')?.errors?.['email']) && loginForm.get('email')?.touched"
+            class="bg-danger-subtle p-2 rounded-3">
+            E-mail is required or incorrect
+        </p>
+    </div>
+
+    <div class="input-group mb-3">
+        <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+        <input [type]="isHide?'password':'text'" class="form-control" formControlName="password" placeholder="Password"
+            [ngClass]="{
+    'is-invalid': loginForm.get('password')?.invalid && loginForm.get('password')?.touched,
+    'is-valid': loginForm.get('password')?.valid && loginForm.get('password')?.touched
+  }">
+
+        <a class="input-group-text" (click)="isHide=!isHide ">
+            <span>
+                <i class="fa-solid " [class]="isHide? 'fa-eye-slash' :'fa-eye'"></i>
+            </span>
+        </a>
+
+
+
+    </div>
+
+
+    <div>
+        <p *ngIf=" loginForm.get('password')?.errors?.['required'] && loginForm.get('password')?.touched"
+            class="bg-danger-subtle p-2 rounded-3">
+            Password is required
+        </p>
+
+        <p *ngIf="loginForm.get('password')?.errors?.['minlength'] && loginForm.get('password')?.touched"
+            class="bg-danger-subtle p-2 rounded-3">
+            Password must be at least 3 characters
+        </p>
+
+        <p *ngIf="loginForm.get('password')?.errors?.['maxlength'] && loginForm.get('password')?.touched"
+            class="bg-danger-subtle p-2 rounded-3">
+            Password must be no more than 20 characters
+        </p>
+    </div>
+
+
+    <div class="d-flex align-items-center justify-content-between  my-4">
+        <a class="text-black text-decoration-none" routerLink="/auth/register">Register Now?</a>
+        <a class="Forgot" routerLink="/auth/forgot">Forgot Password?</a>
+    </div>
+
+
+    <button class="btn-main w-100" type="submit">Login</button>
+</form>
