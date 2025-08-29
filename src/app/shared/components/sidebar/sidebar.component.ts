@@ -20,7 +20,6 @@ export class SidebarComponent {
     this.toggle.emit();
   }
   isCollapsed = false;
-  @Output() toggle = new EventEmitter<void>();
 
   toggleSidebar() {
     this.isCollapsed = !this.isCollapsed;
