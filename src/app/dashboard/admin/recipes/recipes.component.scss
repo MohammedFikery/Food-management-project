@@ -1,0 +1,33 @@
+.main-bg {
+  background-image: url(../../../../assets/images/Rectangle.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 16px;
+  span {
+    font-size: 32px;
+    font-weight: 400;
+  }
+}
+h3 {
+  font-size: 20px;
+  font-weight: 500;
+  font-family: Poppins;
+}
+h4 {
+  font-size: 14px;
+  font-weight: 400;
+  font-family: Poppins;
+}
+
+th {
+  background-color: hsl(0, 0%, 80%) !important;
+}
+.custom-Icon {
+  color: var(--mainColor) !important;
+}
+.row-img {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+}

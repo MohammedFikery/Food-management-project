@@ -1,6 +1,7 @@
 import { AuthApisService } from './../../services/AuthApis.service';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -22,7 +23,8 @@ export class LoginComponent {
 
   constructor(
     private readonly _AuthApisService: AuthApisService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private _Router: Router
   ) {}
 
   login() {
@@ -36,9 +38,12 @@ export class LoginComponent {
     this._AuthApisService.login(data).subscribe({
       next: (res) => {
         this.toastr.success('Login success', 'success!');
+        console.log(res);
+        localStorage.setItem('userToken', res.token);
+        this._AuthApisService.getProfile();
       },
-      error: (err) => {
-        this.toastr.success('Login error!', 'Error!');
+      complete: () => {
+        this._Router.navigate(['/dashboard']);
       },
     });
   }

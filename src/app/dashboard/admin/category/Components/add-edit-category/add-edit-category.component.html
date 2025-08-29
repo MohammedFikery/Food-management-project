@@ -1,0 +1,42 @@
+<div class="container dilog ">
+    <div class="d-flex align-items-center justify-content-between">
+        <div [ngSwitch]="formNumber">
+            <h2 mat-dialog-title *ngSwitchCase=1 class="ps-0">Add Category</h2>
+            <h2 mat-dialog-title *ngSwitchCase=2 class="ps-0">Edit Category</h2>
+            <h2 mat-dialog-title *ngSwitchCase=3 class="ps-0">view Category</h2>
+        </div>
+        <mat-dialog-actions>
+            <button class="btn bg-light" (click)="closeDialog()">
+                <i class="fa-solid fa-circle-xmark text-danger"></i>
+            </button>
+        </mat-dialog-actions>
+    </div>
+
+    <form class="example-form" [formGroup]="newCategory" (ngSubmit)="addCategory(newCategory)">
+        <mat-form-field class="w-100">
+            <mat-label>Category Name</mat-label>
+            <input matInput #message maxlength="256" placeholder="insert Category Name" formControlName='name'
+                [readonly]="formNumber===3">
+            <mat-hint align="end">{{message.value.length}} / 256</mat-hint>
+        </mat-form-field>
+        <div>
+            <p *ngIf=" newCategory.get('name')?.errors?.['required'] && newCategory.get('name')?.touched"
+                class="bg-danger-subtle p-2 rounded-3">
+                Category Name is required
+            </p>
+
+            <p *ngIf="newCategory.get('name')?.errors?.['minlength'] && newCategory.get('name')?.touched"
+                class="bg-danger-subtle p-2 rounded-3">
+                Category Name must be more than 3 characters
+            </p>
+
+        </div>
+
+
+        <div [ngSwitch]="formNumber">
+            <button *ngSwitchCase=1 class="btn-main float-end rounded-2 px-5 my-3">Save</button>
+            <button *ngSwitchCase=2 class="btn-main float-end rounded-2 px-5 my-3">edit</button>
+        </div>
+
+    </form>
+</div>

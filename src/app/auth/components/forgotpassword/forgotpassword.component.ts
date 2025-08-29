@@ -26,16 +26,14 @@ export class ForgotpasswordComponent {
       return;
     }
 
-    const data = this.forgotPassword.value;
+    const data: any = this.forgotPassword.value;
 
     this._AuthApisService.forgot(data).subscribe({
       next: (res) => {
         console.log(' success', res);
+        this._Router.navigate(['/auth/resetPassword']);
+        this._AuthApisService.email = this.forgotPassword.value.email;
         this.toastr.success(' success!', 'success!');
-        this._Router.navigate(['/auth/login']);
-      },
-      error: (err) => {
-        console.error(' error', 'error');
       },
     });
   }

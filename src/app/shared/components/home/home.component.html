@@ -1,0 +1,36 @@
+<section class="mx-3 ">
+    <div class="row align-items-center justify-content-center rounded-3  ">
+        <div class="col-md-6 ps-5 text-light ">
+            <h1>Welcome <span class="lead h1">{{userName}} !</span></h1>
+            <p class="w-75 lead">This is a welcoming screen for the entry of the application , you can now see the
+                options
+            </p>
+        </div>
+        <div class="col-md-6 p-0 text-center ">
+            <img src="./assets/images/Groupbg.png" class="w-50 h-100" alt="">
+        </div>
+    </div>
+
+    <div *ngIf="userRole=='SuperAdmin'" class="d-flex align-items-center justify-content-between my-4 dis-bg">
+        <div>
+            <h2>Fill the <span>Recipes !</span></h2>
+            <p>you can now fill the meals easily using the table and form , click here and sill it with the table !</p>
+
+        </div>
+        <div>
+            <button routerLink="/dashboard/admin/recipes" class="btn-main px-5 rounded-2">Fill Recipes <i
+                    class="fa-solid fa-arrow-right"></i></button>
+        </div>
+    </div>
+    <div *ngIf="userRole=='SystemUser'" class="d-flex align-items-center justify-content-between my-4 dis-bg">
+        <div>
+            <h2>Show thes <span>Recipes !</span></h2>
+            <p>you can now fill the meals easily using the table and form , click here and sill it with the table !</p>
+
+        </div>
+        <div>
+            <button routerLink="/dashboard/user/recipesUser" class="btn-main px-5 rounded-2">Recipes <i
+                    class="fa-solid fa-arrow-right"></i></button>
+        </div>
+    </div>
+</section>

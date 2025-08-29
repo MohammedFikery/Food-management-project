@@ -1,0 +1,65 @@
+.main-bg {
+  background-image: url(../../../../../assets/images/Rectangle.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 16px;
+  span {
+    font-size: 32px;
+    font-weight: 400;
+  }
+}
+h3 {
+  font-size: 20px;
+  font-weight: 500;
+  font-family: Poppins;
+}
+h4 {
+  font-size: 14px;
+  font-weight: 400;
+  font-family: Poppins;
+}
+
+th {
+  background-color: hsl(0, 0%, 80%) !important;
+}
+.custom-Icon {
+  color: var(--mainColor) !important;
+}
+.row-img {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+}
+
+.icon {
+  position: absolute;
+  top: 3%;
+  right: 2%;
+  z-index: 2;
+}
+.icon a {
+  transition: all 0.3s ease-in-out;
+}
+.icon a:hover {
+  background-color: var(--mainColor) !important;
+  color: white !important;
+}
+mat-card img {
+  height: 400px;
+  width: 100%;
+  object-fit: cover;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  transition: transform 0.3s ease-in-out;
+}
+mat-card img:hover {
+  transform: scale(1.05);
+}
+mat-card {
+  transition: transform 0.3s ease-in-out;
+  overflow: hidden;
+}
+mat-card:hover {
+  transform: scale(1.05);
+}

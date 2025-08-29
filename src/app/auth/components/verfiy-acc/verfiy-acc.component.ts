@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { AuthApisService } from '../../services/AuthApis.service';
@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   templateUrl: './verfiy-acc.component.html',
   styleUrls: ['./verfiy-acc.component.scss'],
 })
-export class VerfiyAccComponent {
+export class VerfiyAccComponent implements OnInit {
   verifyAccount = new FormGroup({
     email: new FormControl(null, [Validators.required, Validators.email]),
     code: new FormControl(null, [Validators.required]),
@@ -20,6 +20,9 @@ export class VerfiyAccComponent {
     private toastr: ToastrService,
     private _Router: Router
   ) {}
+  ngOnInit(): void {
+    this.verifyAccount.get('email')?.patchValue(this._AuthApisService.email);
+  }
 
   login() {
     if (this.verifyAccount.invalid) {
@@ -34,9 +37,6 @@ export class VerfiyAccComponent {
         console.log('verify success', res);
         this.toastr.success('verify success!', 'success!');
         this._Router.navigate(['/auth/login']);
-      },
-      error: (err) => {
-        console.error('verify error', 'error');
       },
     });
   }

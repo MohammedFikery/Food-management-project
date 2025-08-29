@@ -1,0 +1,50 @@
+<div class="container-fluid my-4 ">
+
+    <div class="row main-bg my-3">
+        <div class="col-md-10 align-content-center text-light ps-5">
+            <h1>Current Users <span>Profile</span></h1>
+            <p class="w-50">You can now add your items that any user can order it from the Application and you can
+                edit</p>
+        </div>
+        <div class="col-md-2">
+            <img src="./assets/images/menuAvtar.svg" alt="">
+        </div>
+
+    </div>
+
+    <div class="card shadow-lg border-0 rounded-3 ">
+        <div class="row g-0 align-items-center">
+            <div class="col-md-4">
+                <img src="{{imagePath}}" alt="{{ user.userName }}"
+                    class="img-fluid rounded-start w-100 object-fit-contain my-2 rounded-4" style="height: 300PX;">
+            </div>
+
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h4 class="card-title text-success mb-3 my-2">{{ user.userName }}</h4>
+                    <p class="mb-2"><strong><i class="fa-solid fa-envelope me-1"></i> Email:</strong> {{ user.email }}
+                    </p>
+                    <p class="mb-2"><strong><i class="fa-solid fa-earth-americas me-1"></i>Country:</strong> {{
+                        user.country
+                        }}</p>
+                    <p class="mb-2"><strong><i class="fa-solid fa-phone me-1"></i>Phone:</strong> {{ user.phoneNumber }}
+                    </p>
+                    <p class="mb-2"><strong><i class="fa-solid fa-user-group me-1"></i>Group:</strong> {{
+                        user.group.name==Role.Admin?'Admin':'User' }}
+                    </p>
+                    <p class="mb-2 text-muted">
+                        <small><i class="fa-regular fa-calendar-plus me-1"></i>Created: {{ user.creationDate | date:
+                            'dd-MM-yyyy' }}</small>
+                    </p>
+                    <p class="mb-2 text-muted">
+                        <small><i class="fa-solid fa-pen me-1"></i>Last Modified: {{ user.modificationDate | date:
+                            'dd-MM-yyyy' }}</small>
+                    </p>
+                </div>
+                <button routerLink="/dashboard/editProfile" class="btn btn-outline-success me-5 float-end my-3">Edit
+                    your
+                    Profile <i class="fa-solid fa-user-pen"></i></button>
+            </div>
+        </div>
+    </div>
+</div>

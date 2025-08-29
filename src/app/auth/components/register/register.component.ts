@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  AbstractControl,
+} from '@angular/forms';
 import { AuthApisService } from '../../services/AuthApis.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
@@ -14,22 +19,24 @@ export class RegisterComponent {
   public isHideConfirm: boolean = true;
   imgSrc: any;
 
-  registerForm = new FormGroup({
-    userName: new FormControl(null, [Validators.required]),
-    email: new FormControl(null, [Validators.required, Validators.email]),
-    country: new FormControl(null, [Validators.required]),
-    phoneNumber: new FormControl(null, [Validators.required]),
-    password: new FormControl(null, [
-      Validators.required,
-      Validators.maxLength(20),
-      Validators.minLength(3),
-    ]),
-    confirmPassword: new FormControl(null, [
-      Validators.required,
-      Validators.maxLength(20),
-      Validators.minLength(3),
-    ]),
-  });
+  registerForm = new FormGroup(
+    {
+      userName: new FormControl(null, [
+        Validators.required,
+        Validators.maxLength(8),
+      ]),
+      email: new FormControl(null, [Validators.required, Validators.email]),
+      country: new FormControl(null, [Validators.required]),
+      phoneNumber: new FormControl(null, [Validators.required]),
+      password: new FormControl(null, [
+        Validators.required,
+        Validators.maxLength(20),
+        Validators.minLength(3),
+      ]),
+      confirmPassword: new FormControl(null),
+    },
+    this.confirmPassword
+  );
 
   constructor(
     private readonly _AuthApisService: AuthApisService,
@@ -57,9 +64,7 @@ export class RegisterComponent {
       next: (res) => {
         this.toastr.success('Register success', 'success!');
         this._Router.navigate(['/auth/verify']);
-      },
-      error: (err) => {
-        this.toastr.error('Register error', 'error!');
+        this._AuthApisService.email = data.value.email;
       },
     });
   }
@@ -67,11 +72,22 @@ export class RegisterComponent {
   files: File[] = [];
 
   onSelect(event: any) {
-    this.files.push(...event.addedFiles);
+    const selectedFile = event.addedFiles[0];
+    if (selectedFile) {
+      this.files = [selectedFile];
+    }
     this.imgSrc = this.files[0];
   }
 
   onRemove(event: any) {
     this.files.splice(this.files.indexOf(event), 1);
+  }
+  confirmPassword(g: AbstractControl) {
+    if (g.get('password')?.value === g.get('confirmPassword')?.value) {
+      return null;
+    }
+    return {
+      misMatch: true,
+    };
   }
 }

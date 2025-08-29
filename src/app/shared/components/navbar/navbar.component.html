@@ -1,0 +1,39 @@
+<div class="container-fluid my-2  shadow rounded-3">
+    <div class="topbar">
+
+        <!-- Search -->
+        <div class="search-box d-flex align-items-center justify-content-between gap-3">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" class="form-control search-input" placeholder="Search Here">
+        </div>
+
+        <!-- Profile & Notification -->
+        <div class="d-flex align-items-center">
+            <div class="user-profile d-flex align-items-center me-3">
+                <img src="{{imagePath}}" alt="User Avatar">
+                <!-- https://i.pravatar.cc/40 -->
+                <span class="ms-2">{{username}} </span>
+            </div>
+            <div [matMenuTriggerFor]="menu">
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item routerLink="/dashboard/myProfile">
+                    <mat-icon class="custom-Icon">person</mat-icon>
+                    <span>Show My profile</span>
+                </button>
+
+                <button mat-menu-item (click)=" logOut()">
+                    <mat-icon class="custom-Icon">logout</mat-icon>
+                    <span>Log out</span>
+                </button>
+            </mat-menu>
+
+
+            <div class="notification-icon">
+                <i class="fa-solid fa-bell"></i>
+            </div>
+        </div>
+
+    </div>
+</div>

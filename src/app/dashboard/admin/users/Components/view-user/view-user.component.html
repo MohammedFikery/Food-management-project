@@ -1,0 +1,39 @@
+<div class="container mt-4">
+    <div class="" style="width: 550px; margin: auto;">
+        <mat-dialog-actions class="position-absolute top-0 end-0 m-2">
+            <button class="btn  btn-sm rounded-circle shadow-sm" (click)="closeDialog()">
+                <i class="fa-solid fa-xmark text-danger fs-5"></i>
+            </button>
+        </mat-dialog-actions>
+        <div class="text-center bg-light p-4 border-bottom">
+            <img [src]="user.imagePath ? 'https://upskilling-egypt.com:3006/' + user.imagePath : './assets/images/No-Image-Placeholder.svg.png'"
+                class="user-image shadow-sm" alt="{{ user.userName }}">
+        </div>
+        <div class="card-body p-1">
+            <div class="row g-1">
+                <div class="col-md-8">
+                    <h4 class="card-title text-success fw-bold">{{ user.userName }}</h4>
+                    <p class="mb-1"><i class="fa-solid fa-envelope text-success me-2"></i><strong>Email:</strong> {{
+                        user.email }}</p>
+                    <p class="mb-1"><i class="fa-solid fa-earth-africa text-success me-2"></i><strong>Country:</strong>
+                        {{ user.country }}</p>
+                    <p class="mb-1"><i class="fa-solid fa-phone text-success me-2"></i><strong>Phone:</strong> {{
+                        user.phoneNumber }}</p>
+
+                    <hr>
+                    <p class="text-muted small mb-1"><i class="fa-regular fa-calendar-check me-1"></i>Created on: {{
+                        user.creationDate | date:'dd-MM-yyyy' }}</p>
+                    <p class="text-muted small"><i class="fa-regular fa-pen-to-square me-1"></i>Last modified: {{
+                        user.modificationDate | date:'dd-MM-yyyy' }}</p>
+                </div>
+                <div class="col-md-4">
+                    <h6 class="text-success fw-bold mb-2"><i class="fa-solid fa-users me-2"></i>Group Info</h6>
+                    <p class="mb-1"><strong>Name:</strong> {{ user.group.name===Role.Admin?'Admin':'User' }}</p>
+                    <p class="mb-1"><strong>Created:</strong> {{ user.group.creationDate | date:'dd-MM-yyyy' }}</p>
+                    <p class="mb-1"><strong>Modified:</strong> {{ user.group.modificationDate | date:'dd-MM-yyyy' }}</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

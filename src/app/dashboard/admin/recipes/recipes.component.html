@@ -1,0 +1,124 @@
+<section>
+    <div class="container-fluid">
+        <div class="row main-bg my-3">
+            <div class="col-md-10 align-content-center text-light ps-5">
+                <h1>Recipes <span>Item</span></h1>
+                <p class="w-50">You can now add your items that any user can order it from the Application and you can
+                    edit</p>
+            </div>
+            <div class="col-md-2">
+                <img src="./assets/images/menuAvtar.svg" alt="">
+            </div>
+
+        </div>
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <h3>Recipe Table Details</h3>
+                <h4>You can check all details</h4>
+            </div>
+            <div class="py-2">
+                <button routerLink="save" class="btn-main px-5 rounded-2">Add New Recipes</button>
+            </div>
+        </div>
+        <div class="mt-2 border border-2 pt-3 px-2 rounded-2 shadow-lg">
+            <!-- Search -->
+            <div class="row g-1">
+
+                <div class="col-md-6">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label><i class="fa-solid fa-magnifying-glass"></i> Search here ....</mat-label>
+                        <input matInput type="text" [(ngModel)]="name" (keydown.enter)="getRecipes()">
+                        <button *ngIf="name" matSuffix mat-icon-button aria-label="Clear"
+                            (click)="name=''; getRecipes()">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Filter by Tag...</mat-label>
+                        <mat-select [(ngModel)]="tagId" (ngModelChange)="getRecipes()">
+                            <mat-option value="">Select all Tag</mat-option>
+                            <mat-option *ngFor="let tag of AllTags" [value]=tag.id>{{tag.name}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Filter by Category...</mat-label>
+                        <mat-select [(ngModel)]="categoryId" (ngModelChange)="getRecipes()">
+                            <mat-option value="">Select all Category</mat-option>
+                            <mat-option *ngFor="let category of CategoryData" [value]="category.id">{{category.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+
+        </div>
+        <div *ngIf="totalNumberOfRecords > 0; else templateName">
+            <table class="table table-hover align-middle border border-2 shadow-lg text-center">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Image</th>
+                        <th>price</th>
+                        <th>Description</th>
+                        <th>tag</th>
+                        <th>Category</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of listData">
+                        <td>{{ data.id }}</td>
+                        <td>{{ data.name }}</td>
+                        <td><img class="row-img"
+                                [src]="data.imagePath ? 'https://upskilling-egypt.com:3006/'+data.imagePath:'./assets/images/No-Image-Placeholder.svg.png'"
+                                alt="{{ data.name }}">
+                        </td>
+                        <td class="price-egp">{{ data.price | currency:'EGP'}}</td>
+                        <td>{{ data.description}}</td>
+                        <td>{{ data.tag.name}}</td>
+                        <td>{{ data.category[0]?.name }}</td>
+                        <td class="text-center"><a matIconButton [matMenuTriggerFor]="menu">
+                                <i class="fa-solid fa-ellipsis text-dark"></i> </a></td>
+
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="openViewDialog(data)">
+                                <mat-icon class="custom-Icon">visibility</mat-icon>
+                                <span>View</span>
+                            </button>
+                            <button mat-menu-item [routerLink]="['/dashboard/admin/recipes/edit', data.id]">
+                                <mat-icon class="custom-Icon">edit_square</mat-icon>
+                                <span>Edit</span>
+                            </button>
+                            <button mat-menu-item (click)="openDeleteDialog(data)">
+                                <mat-icon class="custom-Icon">delete</mat-icon>
+                                <span>Delete</span>
+                            </button>
+                        </mat-menu>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div>
+                <mat-paginator [length]="RecipesData.totalNumberOfRecords" [pageSizeOptions]="[10, 50, 100]"
+                    aria-label="Select page" (page)="handlePageEvent($event)" [pageIndex]="pageNumber - 1"
+                    [pageSize]="pageSize" [showFirstLastButtons]="showFirstLastButtons">
+                </mat-paginator>
+            </div>
+        </div>
+
+        <ng-template #templateName>
+            <div class="text-center my-4">
+                <img src="./assets/images/Nodata.svg" alt="No Data">
+            </div>
+        </ng-template>
+
+    </div>
+
+
+</section>

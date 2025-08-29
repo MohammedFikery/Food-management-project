@@ -1,0 +1,183 @@
+<section>
+    <div class="container-fluid">
+        <div class="row main-bg my-3">
+            <div class="col-md-10 align-content-center text-light ps-5">
+                <h1>Favorite <span>Recipes</span></h1>
+                <p class="w-50">
+                    You can now add your items that any user can order it from the
+                    Application and you can edit
+                </p>
+            </div>
+            <div class="col-md-2">
+                <img src="./assets/images/menuAvtar.svg" alt="avatar" />
+            </div>
+        </div>
+
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <h3>Favorite Recipe Table Details</h3>
+                <h4>You can check all details</h4>
+            </div>
+            <div class="py-2">
+                <mat-button-toggle-group [(ngModel)]="viewMode" name="viewMode" aria-label="View mode">
+                    <mat-button-toggle value="grid"><i class="fas fa-th"></i></mat-button-toggle>
+                    <mat-button-toggle value="list"><i class="fas fa-list"></i></mat-button-toggle>
+                </mat-button-toggle-group>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="mt-2 border border-2 pt-3 px-2 rounded-2 shadow-lg Filters">
+            <div class="row g-1">
+                <!-- Search -->
+                <div class="col-md-6">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label><i class="fa-solid fa-magnifying-glass"></i> Search here
+                            ....</mat-label>
+                        <input matInput type="text" [(ngModel)]="name" (keydown.enter)="applyFilters()" />
+                        <button *ngIf="name" matSuffix mat-icon-button aria-label="Clear"
+                            (click)="name=''; applyFilters()">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </div>
+
+                <!-- Filter by Tag -->
+                <div class="col-md-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Filter by Tag...</mat-label>
+                        <mat-select [(ngModel)]="tagId" (ngModelChange)="applyFilters()">
+                            <mat-option [value]="null">Select all Tag</mat-option>
+                            <mat-option *ngFor="let tag of AllTags" [value]="+tag.id">
+                                {{ tag.name }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <!-- Filter by Category -->
+                <div class="col-md-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Filter by Category...</mat-label>
+                        <mat-select [(ngModel)]="categoryId" (ngModelChange)="applyFilters()">
+                            <mat-option [value]="null">Select all Category</mat-option>
+                            <mat-option *ngFor="let category of CategoryData" [value]="+category.id">
+                                {{ category.name }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Table / Grid -->
+        <div *ngIf="totalNumberOfRecords > 0; else noDataTemplate">
+            <!-- List View -->
+            <table *ngIf="viewMode === 'list'"
+                class="table table-hover align-middle border border-2 shadow-lg text-center">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Image</th>
+                        <th>Price</th>
+                        <th>Description</th>
+                        <th>Tag</th>
+                        <th>Category</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of listFilterData">
+                        <td>{{ data.id }}</td>
+                        <td>{{ data.recipe.name }}</td>
+                        <td>
+                            <img class="row-img" [src]="
+                  data.recipe.imagePath
+                    ? 'https://upskilling-egypt.com:3006/' +
+                      data.recipe.imagePath
+                    : './assets/images/No-Image-Placeholder.svg.png'
+                " alt="{{ data.recipe.name }}" />
+                        </td>
+                        <td class="price-egp">
+                            {{ data.recipe.price | currency: "EGP" }}
+                        </td>
+                        <td>{{ data.recipe.description }}</td>
+                        <td>{{ data.recipe.tag.name }}</td>
+                        <td>{{ data.recipe.category[0]?.name }}</td>
+                        <td class="text-center">
+                            <a matIconButton [matMenuTriggerFor]="menu">
+                                <i class="fa-solid fa-ellipsis text-dark"></i>
+                            </a>
+                        </td>
+
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="RemoveFromFavorite(data.id)">
+                                <mat-icon class="custom-Icon">event_busy</mat-icon>
+                                <span>Remove From favorite</span>
+                            </button>
+                        </mat-menu>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Grid View -->
+            <div *ngIf="viewMode === 'grid'" class="my-3">
+                <div class="row my-1 g-4">
+                    <div *ngFor="let data of listFilterData" class="col-md-4 position-relative ">
+                        <mat-card class="example-card shadow shadow-lg rounded-3">
+                            <div class="icon">
+                                <a (click)="RemoveFromFavorite(data.id)" class="bg-light text-success p-1 rounded-2"><i
+                                        class="fa-solid fa-heart"></i></a>
+                            </div>
+                            <img mat-card-image [src]="
+                  data.recipe.imagePath
+                    ? 'https://upskilling-egypt.com:3006/' +
+                      data.recipe.imagePath
+                    : './assets/images/No-Image-Placeholder.svg.png'
+                " alt="{{ data.recipe.name }}" />
+                            <mat-card-header>
+                                <mat-card-title class="h1 text-success my-2 lead">
+                                    <i class="fa-solid fa-layer-group me-2"></i>
+                                    {{ data.recipe.name }}
+                                </mat-card-title>
+                                <mat-card-subtitle>
+                                    <i class="fa-solid fa-money-check me-2"></i>{{ data.recipe.price | currency: "EGP"
+                                    }}
+                                </mat-card-subtitle>
+                            </mat-card-header>
+                            <mat-card-content>
+                                <p class="my-2">
+                                    <i class="fa-solid fa-capsules me-2"></i>{{ data.recipe.description }}
+                                </p>
+                                <p>
+                                    <i class="fa-solid fa-tags me-2"></i> Tag:
+                                    {{ data.recipe.tag.name }}
+                                </p>
+                                <p>
+                                    <i class="fa-solid fa-layer-group me-2"></i> Category:
+                                    {{ data.recipe.category[0]?.name }}
+                                </p>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div>
+                <mat-paginator [length]="listFilterData.length" [pageSizeOptions]="[10, 50, 100]"
+                    aria-label="Select page" (page)="handlePageEvent($event)" [pageIndex]="pageNumber - 1"
+                    [pageSize]="pageSize" [showFirstLastButtons]="showFirstLastButtons">
+                </mat-paginator>
+            </div>
+        </div>
+
+        <!-- No Data Template -->
+        <ng-template #noDataTemplate>
+            <div class="text-center my-4">
+                <img src="./assets/images/Nodata.svg" alt="No Data" />
+            </div>
+        </ng-template>
+    </div>
+</section>

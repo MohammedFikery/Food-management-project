@@ -1,0 +1,67 @@
+<div class="container h-100 my-3">
+
+    <div>
+
+        <div class="row g-3" style="width: 500PX;">
+            <!-- Image Section -->
+
+
+            <div class="col-md-6 my-3">
+                <div class="h-100 w-100 d-flex align-items-center justify-content-center p-3">
+                    <img [src]="formdata.imagePath ? 'https://upskilling-egypt.com:3006/' + formdata.imagePath : './assets/images/No-Image-Placeholder.svg.png'"
+                        class="img-fluid w-100 rounded-4" alt="{{ formdata.userName }}">
+
+
+                </div>
+            </div>
+
+            <!-- Info Section -->
+            <div class="col-md-6">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <h3 class="card-title mb-2 fw-bold text-success w-75">{{formdata.name}}</h3>
+
+                        <mat-dialog-actions class="w-25">
+                            <button class="btn text-danger" (click)="closeDialog()">
+                                <i class="fa-solid fa-circle-xmark"></i>
+                            </button>
+                        </mat-dialog-actions>
+                    </div>
+                    <h5 class=" fw-bold mb-3"><i class="fa-solid fa-money-check-dollar ms-2"></i> {{formdata.price
+                        |currency:'EGY '}}</h5>
+
+                    <div class="mb-3 d-flex flex-column">
+                        <div>
+                            <span class="badge text-dark"><i class="fa-solid fa-layer-group ms-2"></i> category:
+                            </span>
+                            <ul>
+                                <li *ngFor="let item of formdata.category">
+                                    {{item.name}}
+                                </li>
+                            </ul>
+                        </div>
+
+                        <p class="badge text-dark text-start py-2"><i class="fa-solid fa-tag ms-2"></i> Tag:
+                            {{formdata.tag.name}} </p>
+                    </div>
+
+                    <p class="mb-1">
+                        <small class="text-muted">
+                            <i class="fa-solid fa-calendar-plus ms-2"></i>
+                            creationDate:{{formdata.creationDate|date:'dd-MM-yyyy'}}
+                        </small>
+                    </p>
+                    <p class="mb-0">
+                        <small class="text-muted">
+                            <i class="fa-solid fa-calendar-days ms-2"></i>
+                            modificationDate:{{formdata.modificationDate|date:'dd-MM-yyyy'}}
+                        </small>
+                    </p>
+                </div>
+            </div>
+            <button *ngIf="userRole ==='SystemUser'" class="btn btn-outline-success w-75 m-auto mt-3 mb-1"
+                (click)="addToFavorite(formdata.id)">Add To
+                Favorite <i class="fa-solid fa-heart-circle-plus ms-2"></i></button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,124 @@
+<section>
+    <div class="container-fluid">
+        <div class="row main-bg my-3">
+            <div class="col-md-10 align-content-center text-light ps-5">
+                <h1>Users <span>List</span></h1>
+                <p class="w-50">You can now add your items that any user can order it from the Application and you can
+                    edit</p>
+            </div>
+            <div class="col-md-2">
+                <img src="./assets/images/menuAvtar.svg" alt="">
+            </div>
+
+        </div>
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <h3>Users Table Details</h3>
+                <h4>You can check all details</h4>
+            </div>
+
+        </div>
+
+        <div class="mt-2 border border-2 pt-3 px-2 rounded-2 shadow-lg">
+            <div class="row g-1 align-items-center">
+
+                <!-- Search Input -->
+                <div class="col-md-6">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label><i class="fa-solid fa-magnifying-glass"></i> Search here ....</mat-label>
+                        <input matInput type="text" [(ngModel)]="name" (keydown.enter)="getUser()">
+                        <button *ngIf="name" matSuffix mat-icon-button aria-label="Clear" (click)="name=''; getUser()">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </div>
+
+                <!-- Search by -->
+                <div class="col-md-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Search by...</mat-label>
+                        <mat-select [(ngModel)]="paramName" (ngModelChange)="getUser()">
+                            <mat-option value="userName">User Name</mat-option>
+                            <mat-option value="email">Email</mat-option>
+                            <mat-option value="country">Country</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <!-- Groups -->
+                <div class="col-md-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Search Role...</mat-label>
+                        <mat-select [(ngModel)]="groupsNumber" (ngModelChange)="getUser()">
+                            <mat-option value="">Select all Roles</mat-option>
+                            <mat-option value="1">Admin</mat-option>
+                            <mat-option value="2">User</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+            </div>
+        </div>
+
+        <div *ngIf="totalNumberOfRecords > 0; else templateName">
+            <table class="table table-hover align-middle border border-2 shadow-lg text-center">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>USerName</th>
+                        <th>Image</th>
+                        <th>email</th>
+                        <th>country</th>
+                        <th>phoneNumber</th>
+                        <th>Role</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of listData">
+                        <td>{{ data.id }}</td>
+                        <td>{{ data.userName }}</td>
+
+                        <td><img class="row-img"
+                                [src]="data.imagePath ? 'https://upskilling-egypt.com:3006/'+data.imagePath:'./assets/images/No-Image-Placeholder.svg.png'"
+                                alt="{{ data.userName }}">
+                        </td>
+                        <td>{{ data.email}}</td>
+                        <td>{{ data.country}}</td>
+                        <td>{{ data.phoneNumber}}</td>
+                        <td> {{ data.group.name=== Role.Admin?'Admin':'User' }}</td>
+                        <td class="text-center"><a matIconButton [matMenuTriggerFor]="menu">
+                                <i class="fa-solid fa-ellipsis text-dark"></i> </a></td>
+
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="openViewDialog(data)">
+                                <mat-icon class="custom-Icon">visibility</mat-icon>
+                                <span>View</span>
+                            </button>
+                            <button mat-menu-item (click)="openDeleteDialog(data)">
+                                <mat-icon class="custom-Icon">delete</mat-icon>
+                                <span>Delete</span>
+                            </button>
+                        </mat-menu>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div>
+                <mat-paginator [length]="UserData.totalNumberOfRecords" [pageSizeOptions]="[10, 50, 100]"
+                    aria-label="Select page" (page)="handlePageEvent($event)" [pageIndex]="pageNumber - 1"
+                    [pageSize]="pageSize" [showFirstLastButtons]="showFirstLastButtons">
+                </mat-paginator>
+            </div>
+        </div>
+
+        <ng-template #templateName>
+            <div class="text-center my-4">
+                <img src="./assets/images/Nodata.svg" alt="No Data">
+            </div>
+        </ng-template>
+
+    </div>
+
+
+</section>

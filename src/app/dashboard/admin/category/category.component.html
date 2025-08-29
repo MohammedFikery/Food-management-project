@@ -1,0 +1,90 @@
+<section>
+    <div class="container-fluid">
+        <div class="row main-bg my-3">
+            <div class="col-md-10 align-content-center text-light ps-5">
+                <h1>Categories <span>Item</span></h1>
+                <p class="w-50">You can now add your items that any user can order it from the Application and you can
+                    edit</p>
+            </div>
+            <div class="col-md-2">
+                <img src="./assets/images/menuAvtar.svg" alt="">
+            </div>
+
+        </div>
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <h3>Categories Table Details</h3>
+                <h4>You can check all details</h4>
+            </div>
+            <div class="py-2">
+                <button (click)="openDialog(1)" class="btn-main px-5 rounded-2">Add New Category</button>
+            </div>
+        </div>
+        <div class="mt-2 border border-2 pt-3 px-2 rounded-2 shadow-lg">
+            <!-- Search -->
+            <div class="search-box d-flex align-items-center justify-content-between gap-3">
+                <mat-form-field class="w-100" appearance="outline">
+                    <mat-label><i class="fa-solid fa-magnifying-glass"></i> Search here ....</mat-label>
+                    <input matInput type="text" [(ngModel)]="name" (keydown.enter)="getCategory()">
+                    <button *ngIf="name" matSuffix mat-icon-button aria-label="Clear" (click)="name=''; getCategory()">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </mat-form-field>
+            </div>
+        </div>
+        <div *ngIf="totalNumberOfRecords > 0; else templateName">
+            <table class="table table-hover align-middle border border-2 shadow-lg text-center">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Creation Date</th>
+                        <th>Modification Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of listData">
+                        <td>{{ data.id }}</td>
+                        <td>{{ data.name }}</td>
+                        <td>{{ data.creationDate | date: 'dd-MM-yyyy' }}</td>
+                        <td>{{ data.modificationDate | date: 'dd-MM-yyyy' }}</td>
+                        <td class="text-center"><a matIconButton [matMenuTriggerFor]="menu">
+                                <i class="fa-solid fa-ellipsis text-dark"></i> </a></td>
+
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="openDialog(3,0,data.name)">
+                                <mat-icon class="custom-Icon">visibility</mat-icon>
+                                <span>View</span>
+                            </button>
+                            <button mat-menu-item (click)="openDialog(2, data.id,data.name)">
+                                <mat-icon class="custom-Icon">edit_square</mat-icon>
+                                <span>Edit</span>
+                            </button>
+                            <button mat-menu-item (click)="openDeleteDialog(data)">
+                                <mat-icon class="custom-Icon">delete</mat-icon>
+                                <span>Delete</span>
+                            </button>
+                        </mat-menu>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div>
+                <mat-paginator [length]="CategoryData.totalNumberOfRecords" [pageSizeOptions]="[10, 50, 100]"
+                    aria-label="Select page" (page)="handlePageEvent($event)" [pageIndex]="pageNumber - 1"
+                    [pageSize]="pageSize" [showFirstLastButtons]="showFirstLastButtons">
+                </mat-paginator>
+            </div>
+        </div>
+
+        <ng-template #templateName>
+            <div class="text-center my-4">
+                <img src="./assets/images/Nodata.svg" alt="No Data">
+            </div>
+        </ng-template>
+
+    </div>
+
+
+</section>
